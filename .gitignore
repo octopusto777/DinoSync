@@ -137,3 +137,20 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+
+# ==========================================
+# WeChat Mini Program & Cursor Custom Rules
+# ==========================================
+
+# 微信开发者工具私有配置（包含个人调试密钥，严禁上传）
+project.private.config.json
+
+# 编辑器目录及本地历史 (Cursor/VS Code)
+.vscode/
+.history/
+.cursorrules  # (可选：如果你的规则里包含个人敏感路径，可以忽略，否则建议上传)
+
+# 编译或打包产物（如果只用纯原生开发可忽略，若是 UniApp/Taro 等框架则必需）
+dist/
+unpackage/
