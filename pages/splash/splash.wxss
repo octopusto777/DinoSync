@@ -1,0 +1,197 @@
+/* pages/splash/splash.wxss — 启动页样式 */
+.splash-wrap {
+  height: 100vh;
+  background: linear-gradient(180deg, #1a3629 0%, #11241b 60%, #0f2018 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── 背景光晕 ── */
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80rpx);
+  pointer-events: none;
+}
+
+.glow-1 {
+  width: 500rpx;
+  height: 500rpx;
+  background: rgba(140, 196, 122, 0.16);
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.glow-2 {
+  width: 400rpx;
+  height: 400rpx;
+  background: rgba(200, 240, 96, 0.12);
+  bottom: 25%;
+  right: 10%;
+  animation: glowPulse 3s ease-in-out 1.5s infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.15); }
+}
+
+/* ── 主内容入场 ── */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  opacity: 0;
+  transform: translateY(40rpx);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Logo ── */
+.logo-wrap {
+  width: 200rpx;
+  height: 200rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  margin-bottom: 48rpx;
+}
+
+.logo-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-dino {
+  font-size: 80rpx;
+  position: relative;
+  z-index: 2;
+}
+
+.logo-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1rpx solid rgba(200, 240, 96, 0.3);
+  animation: ringExpand 2s ease-out infinite;
+}
+
+.ring-1 { width: 120rpx; height: 120rpx; }
+.ring-2 { width: 160rpx; height: 160rpx; animation-delay: 0.4s; }
+.ring-3 { width: 200rpx; height: 200rpx; animation-delay: 0.8s; }
+
+@keyframes ringExpand {
+  0% { opacity: 0.8; transform: scale(0.8); }
+  100% { opacity: 0; transform: scale(1.3); }
+}
+
+/* ── 品牌名 ── */
+.brand-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.brand-name {
+  font-size: 72rpx;
+  font-weight: 600;
+  color: #eef5ef;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.brand-cn {
+  font-size: 28rpx;
+  color: #6f8d79;
+  letter-spacing: 0.2em;
+  margin-top: 8rpx;
+}
+
+/* ── Slogan ── */
+.slogan-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  margin-bottom: 80rpx;
+}
+
+.slogan-en {
+  font-size: 24rpx;
+  color: #c8f060;
+  letter-spacing: 0.05em;
+}
+
+.slogan-cn {
+  font-size: 22rpx;
+  color: #86a28f;
+  letter-spacing: 0.12em;
+}
+
+/* ── 加载条 ── */
+.loading-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+  width: 300rpx;
+}
+
+.loading-bar {
+  width: 100%;
+  height: 2rpx;
+  background: #2b4a3a;
+  border-radius: 100rpx;
+  overflow: hidden;
+}
+
+.loading-fill {
+  height: 100%;
+  background: #c8f060;
+  border-radius: 100rpx;
+  animation: loadingProgress 2.2s ease-out forwards;
+}
+
+@keyframes loadingProgress {
+  0% { width: 0%; }
+  60% { width: 70%; }
+  100% { width: 100%; }
+}
+
+.loading-text {
+  font-size: 20rpx;
+  color: #86a28f;
+  letter-spacing: 0.08em;
+}
+
+/* ── 版本号 ── */
+.version {
+  position: absolute;
+  bottom: 60rpx;
+  opacity: 0;
+  transition: opacity 0.8s ease 0.5s;
+}
+
+.version.visible {
+  opacity: 1;
+}
+
+.version text {
+  font-size: 18rpx;
+  color: #6f8d79;
+  letter-spacing: 0.1em;
+}

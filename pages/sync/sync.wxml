@@ -1,0 +1,247 @@
+<!-- pages/sync/sync.wxml — Sync 打卡仪式页 -->
+<view class="sync-page">
+
+  <!-- ── 顶部返回栏 ── -->
+  <view class="top-bar">
+    <view class="back-btn" bind:tap="goBack">
+      <text class="back-icon">‹</text>
+      <text class="back-text">返回地图</text>
+    </view>
+    <view class="top-chip mono">SYNC PROTOCOL</view>
+  </view>
+
+  <!-- ── 地点信息 ── -->
+  <view class="location-info" wx:if="{{ location }}">
+    <view class="loc-badge type-{{ location.type }}">
+      <text>{{ location.typeLabel }}</text>
+    </view>
+    <text class="loc-name">{{ location.name }}</text>
+    <text class="loc-city mono">{{ location.city }}</text>
+  </view>
+
+  <!-- ════════════════════════════════ -->
+  <!-- 阶段 1: IDLE — 等待开始         -->
+  <!-- ════════════════════════════════ -->
+  <view class="phase-wrap {{ phase === 'idle' ? 'visible' : '' }}">
+    <view class="idle-visual">
+      <!-- 坐标扫描圈 -->
+      <view class="coord-ring outer"></view>
+      <view class="coord-ring middle"></view>
+      <view class="coord-dot"></view>
+      <view class="coord-crosshair h"></view>
+      <view class="coord-crosshair v"></view>
+    </view>
+
+    <view class="idle-info">
+      <text class="idle-title">坐标已锁定</text>
+      <text class="idle-sub">检测到 {{ specimens.length }} 个可同步物种</text>
+    </view>
+
+    <!-- 待解锁物种预览 -->
+    <view class="specimen-preview">
+      <view
+        wx:for="{{ specimenCards }}"
+        wx:key="id"
+        class="preview-card {{ item.owned ? 'owned' : '' }}"
+      >
+        <text class="preview-emoji">{{ item.emoji }}</text>
+        <text class="preview-name">{{ item.name }}</text>
+        <view class="preview-rarity rarity-{{ item.rarity }}">
+          <text>{{ item.rarityLabel }}</text>
+        </view>
+        <view wx:if="{{ item.owned }}" class="owned-mark">
+          <text>✓ 已拥有</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="sync-hint">
+      <text class="hint-text">⚡ 按下启动 Sync 协议，同步纪元数据</text>
+    </view>
+
+    <button class="btn-start-sync" bind:tap="startSync">
+      开始同步 · SYNC NOW
+    </button>
+  </view>
+
+  <!-- ════════════════════════════════ -->
+  <!-- 阶段 2: SCANNING — 扫描中       -->
+  <!-- ════════════════════════════════ -->
+  <view class="phase-wrap {{ phase === 'scanning' ? 'visible' : '' }}">
+    <view class="scanning-visual">
+      <view class="scan-ring ring-a"></view>
+      <view class="scan-ring ring-b"></view>
+      <view class="scan-ring ring-c"></view>
+      <view class="scan-pulse"></view>
+      <text class="scan-icon">📡</text>
+    </view>
+    <text class="scan-title">正在扫描坐标...</text>
+    <text class="scan-sub mono">LOCATING GEOLOGICAL STRATUM</text>
+    <view class="scan-lines">
+      <view class="scan-line"></view>
+      <view class="scan-line" style="animation-delay: 0.3s;"></view>
+      <view class="scan-line" style="animation-delay: 0.6s;"></view>
+    </view>
+  </view>
+
+  <!-- ════════════════════════════════ -->
+  <!-- 阶段 3: SYNCING — 同步进度      -->
+  <!-- ════════════════════════════════ -->
+  <view class="phase-wrap {{ phase === 'syncing' ? 'visible' : '' }}">
+    <view class="syncing-visual">
+      <view class="sync-orbit orbit-1"></view>
+      <view class="sync-orbit orbit-2"></view>
+      <view class="sync-core">
+        <text class="sync-core-emoji">🦕</text>
+      </view>
+    </view>
+
+    <text class="syncing-title">同步纪元数据</text>
+    <text class="syncing-sub mono">SYNCING CRETACEOUS RECORDS...</text>
+
+    <!-- 进度条 -->
+    <view class="progress-wrap">
+      <view class="progress-track">
+        <view class="progress-fill" style="width: {{ progress }}%;"></view>
+      </view>
+      <view class="progress-labels">
+        <text class="progress-percent mono">{{ progress }}%</text>
+        <text class="progress-era mono">白垩纪 → 现代</text>
+      </view>
+    </view>
+
+    <!-- 跳动数据流（装饰效果）-->
+    <view class="data-stream">
+      <text class="stream-item mono">LAT 29.3569°N</text>
+      <text class="stream-item mono">LNG 104.7784°E</text>
+      <text class="stream-item mono">DEPTH 1.6×10⁸yr</text>
+    </view>
+  </view>
+
+  <!-- ════════════════════════════════ -->
+  <!-- 阶段 4: UNLOCKED — 解锁结果     -->
+  <!-- ════════════════════════════════ -->
+  <view class="phase-wrap {{ phase === 'unlocked' ? 'visible' : '' }}">
+
+    <!-- 同步成功标题 -->
+    <view class="unlocked-header">
+      <view class="unlocked-badge">
+        <text class="badge-icon">⚡</text>
+        <text class="badge-text">SYNC COMPLETE</text>
+      </view>
+      <text class="unlocked-title">纪元同步完成</text>
+      <text class="unlocked-sub">{{ location.name }}</text>
+    </view>
+
+    <!-- 新解锁标本 -->
+    <view wx:if="{{ newlyUnlocked.length > 0 }}" class="result-section">
+      <text class="result-label mono">✦ 新解锁标本</text>
+      <view
+        wx:for="{{ newlyUnlocked }}"
+        wx:key="id"
+        class="result-card new-card"
+        style="border-color: {{ item.accentColor }}30;"
+      >
+        <view class="result-card-top" style="background: {{ item.accentColor }}10;">
+          <text class="result-emoji">{{ item.emoji }}</text>
+          <view class="result-rarity rarity-{{ item.rarity }}">
+            <text>{{ item.rarityLabel }}</text>
+          </view>
+        </view>
+        <view class="result-card-body">
+          <text class="result-name">{{ item.name }}</text>
+          <text class="result-latin mono">{{ item.latinName }}</text>
+          <text class="result-era">{{ item.era }} · {{ item.period }}</text>
+          <text class="result-fun">💡 {{ item.funFact }}</text>
+        </view>
+        <button
+          class="share-btn"
+          data-id="{{ item.id }}"
+          bind:tap="showShare"
+        >
+          生成分享卡 ›
+        </button>
+      </view>
+    </view>
+
+    <!-- 已拥有标本 -->
+    <view wx:if="{{ alreadyOwned.length > 0 }}" class="result-section">
+      <text class="result-label mono">✓ 已拥有</text>
+      <view
+        wx:for="{{ alreadyOwned }}"
+        wx:key="id"
+        class="result-card owned-card"
+      >
+        <text class="owned-emoji">{{ item.emoji }}</text>
+        <view class="owned-info">
+          <text class="owned-name">{{ item.name }}</text>
+          <text class="owned-sub mono">{{ item.latinName }}</text>
+        </view>
+        <text class="owned-check">✓</text>
+      </view>
+    </view>
+
+    <!-- 全都已拥有时 -->
+    <view wx:if="{{ newlyUnlocked.length === 0 }}" class="all-owned-tip">
+      <text class="all-owned-icon">🏆</text>
+      <text class="all-owned-text">该坐标全部标本已同步</text>
+      <text class="all-owned-sub">探索其他坐标点解锁更多物种</text>
+    </view>
+
+    <!-- 底部按钮组 -->
+    <view class="done-btns">
+      <button class="btn-collection" bind:tap="goCollection">
+        查看图鉴
+      </button>
+      <button class="btn-back-map" bind:tap="goBack">
+        返回地图
+      </button>
+    </view>
+  </view>
+
+</view>
+
+<!-- ── 分享卡弹窗 ── -->
+<view class="share-mask {{ showShareCard ? 'visible' : '' }}" bind:tap="closeShare"></view>
+<view class="share-panel {{ showShareCard ? 'visible' : '' }}">
+  <view wx:if="{{ shareSpecimen }}" class="share-card-content">
+    <view class="drag-bar"></view>
+    <text class="share-card-hint">长按图片保存 · 分享朋友圈</text>
+
+    <!-- 分享卡设计 -->
+    <view class="share-card">
+      <view class="share-card-bg"></view>
+      <view class="share-card-inner">
+        <view class="sc-header">
+          <text class="sc-brand game-font">DINOSYNC</text>
+          <text class="sc-slogan">Find the Point, Sync the Past.</text>
+        </view>
+        <view class="sc-specimen">
+          <text class="sc-emoji">{{ shareSpecimen.emoji }}</text>
+          <text class="sc-name">{{ shareSpecimen.name }}</text>
+          <text class="sc-latin mono">{{ shareSpecimen.latinName }}</text>
+        </view>
+        <view class="sc-meta">
+          <view class="sc-meta-item">
+            <text class="sc-meta-label mono">LOCATION</text>
+            <text class="sc-meta-val">{{ location.name }}</text>
+          </view>
+          <view class="sc-meta-item">
+            <text class="sc-meta-label mono">ERA</text>
+            <text class="sc-meta-val">{{ shareSpecimen.era }}</text>
+          </view>
+        </view>
+        <view class="sc-footer">
+          <text class="sc-coords mono">{{ location.city }}</text>
+          <view class="sc-rarity rarity-{{ shareSpecimen.rarity }}">
+            <text>{{ shareSpecimen.rarityLabel }}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <button class="btn-share-wechat" bind:tap="onShareTap">
+      📤 分享给朋友
+    </button>
+  </view>
+</view>

@@ -1,0 +1,129 @@
+<!-- pages/map/map.wxml — 探索 -->
+<view class="map-page">
+
+  <!-- 顶部导航 -->
+  <view class="nav-bar">
+    <view>
+      <text class="nav-title game-font">DINOSYNC</text>
+      <text class="nav-sub">探索模式</text>
+    </view>
+    <view class="nav-stats">
+      <text class="nav-stat-num">{{ locations.length }}</text>
+      <text class="nav-stat-label">个线索</text>
+    </view>
+  </view>
+
+  <!-- 真实地图 + 🦴 标记 -->
+  <view class="map-wrap">
+    <map
+      class="explore-map"
+      latitude="{{ mapLat }}"
+      longitude="{{ mapLng }}"
+      scale="{{ mapScale }}"
+      markers="{{ markers }}"
+      bindmarkertap="onMarkerTap"
+      show-location="{{ false }}"
+      enable-zoom="{{ true }}"
+      enable-scroll="{{ true }}"
+    ></map>
+  </view>
+
+  <!-- 筛选器 -->
+  <view class="filter-row">
+    <view class="filter-inner">
+      <view class="filter-chip {{ activeFilter === 'all' ? 'active' : '' }}" data-filter="all" bind:tap="onFilterTap">全部</view>
+      <view class="filter-chip {{ activeFilter === 'museum' ? 'active' : '' }}" data-filter="museum" bind:tap="onFilterTap">馆</view>
+      <view class="filter-chip {{ activeFilter === 'wild' ? 'active' : '' }}" data-filter="wild" bind:tap="onFilterTap">野</view>
+      <view class="filter-chip {{ activeFilter === 'urban' ? 'active' : '' }}" data-filter="urban" bind:tap="onFilterTap">城</view>
+    </view>
+  </view>
+
+  <!-- 地点列表 -->
+  <scroll-view class="location-list" scroll-y>
+    <view class="list-header">
+      <text class="list-title">附近探索线索</text>
+      <text class="list-count mono">{{ locations.length }} 个点位</text>
+    </view>
+    <view
+      wx:for="{{ locations }}"
+      wx:key="id"
+      class="location-card"
+      data-id="{{ item.id }}"
+      bind:tap="onLocationCardTap"
+    >
+      <view class="loc-type-badge type-{{ item.type }}">
+        <text class="loc-type-text">{{ item.typeLabel }}</text>
+      </view>
+      <view class="loc-info">
+        <view class="loc-title-row">
+          <text class="loc-name">{{ item.name }}</text>
+          <text wx:if="{{ item.isHot }}">🔥</text>
+        </view>
+        <text class="loc-city">{{ item.city }}</text>
+        <text class="loc-desc">{{ item.description }}</text>
+      </view>
+      <view class="loc-meta">
+        <text class="loc-count mono">{{ item.unlockCount }}</text>
+        <text class="loc-count-label">人已同步</text>
+      </view>
+    </view>
+    <view style="height:140rpx;"></view>
+  </scroll-view>
+
+  <!-- 地点详情弹窗 -->
+  <view class="sheet-mask {{ showDetail ? 'visible' : '' }}" bind:tap="closeDetail"></view>
+  <view class="bottom-sheet {{ showDetail ? 'visible' : '' }}">
+    <view wx:if="{{ selectedLocation }}">
+      <view class="drag-bar"></view>
+      <view class="sheet-type-row">
+        <view class="loc-type-badge type-{{ selectedLocation.type }}">
+          <text class="loc-type-text">{{ selectedLocation.typeLabel }}</text>
+        </view>
+        <text wx:if="{{ selectedLocation.isHot }}" class="hot-label">🔥 热门</text>
+      </view>
+      <text class="sheet-title">{{ selectedLocation.name }}</text>
+      <text class="sheet-sub">{{ selectedLocation.city }}</text>
+      <text class="sheet-desc">{{ selectedLocation.description }}</text>
+      <view class="sheet-stats-row">
+        <text class="sheet-stat-num mono">{{ selectedLocation.unlockCount }}</text>
+        <text class="sheet-stat-label">人已完成 Sync · 可解锁 {{ selectedLocation.specimenIds.length }} 种标本</text>
+      </view>
+      <button class="btn-action" bind:tap="goSync">开始寻宝解锁</button>
+    </view>
+  </view>
+
+  <!-- BOT 浮窗按钮（真实图片） -->
+  <view class="bot-fab" bind:tap="openBot">
+    <image src="/assets/bot-dino.png" class="bot-fab-img" mode="aspectFill"></image>
+  </view>
+
+  <!-- BOT 问答弹窗 -->
+  <view class="sheet-mask {{ botOpen ? 'visible' : '' }}" bind:tap="closeBot"></view>
+  <view class="bottom-sheet bot-sheet {{ botOpen ? 'visible' : '' }}">
+    <view class="drag-bar"></view>
+    <view class="bot-sheet-head">
+      <view class="bot-avatar-circle">
+        <image src="/assets/bot-dino.png" class="bot-avatar-img" mode="aspectFill"></image>
+      </view>
+      <view>
+        <text class="sheet-title">Era</text>
+        <text class="sheet-sub">大师姐</text>
+      </view>
+    </view>
+    <view class="bot-answer-box">
+      <text class="bot-answer-text">{{ botAnswer }}</text>
+    </view>
+    <view class="bot-input-row">
+      <input
+        class="bot-input"
+        placeholder="问点什么，比如：传奇先去哪里？"
+        value="{{ botQuestion }}"
+        bindinput="onBotInput"
+      />
+      <view class="bot-send" bind:tap="askBot"><text>→</text></view>
+    </view>
+  </view>
+
+</view>
+
+<custom-tab-bar></custom-tab-bar>

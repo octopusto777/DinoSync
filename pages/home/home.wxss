@@ -1,0 +1,129 @@
+/* pages/home/home.wxss */
+
+.home-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #2f7f70 0%, #1d4f46 55%, #173f38 100%);
+}
+
+/* ── 导航 ── */
+.home-nav {
+  padding: 80rpx 28rpx 18rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-title {
+  font-size: 38rpx;
+  font-weight: 700;
+  color: #e8fff0;
+  letter-spacing: 0.08em;
+}
+
+.home-chip {
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 999rpx;
+  padding: 10rpx 24rpx;
+}
+.home-chip text { color: #f2fff7; font-size: 22rpx; }
+
+/* ── 瀑布流滚动区 ── */
+.feed-scroll {
+  height: calc(100vh - 142rpx);
+}
+
+.waterfall {
+  display: flex;
+  gap: 10rpx;
+  padding: 0 12rpx;
+  align-items: flex-start;
+}
+
+.feed-col { flex: 1; }
+
+/* 右列下移，产生视觉错落 */
+.feed-col-right { margin-top: 48rpx; }
+
+/* ── 卡片 ── */
+.feed-card {
+  margin-bottom: 10rpx;
+  padding: 12rpx 12rpx 14rpx;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+
+/* ── 占位图窗口（始终有高度，不会塌陷） ── */
+.media-window {
+  border-radius: 14rpx;
+  overflow: hidden;
+  margin-bottom: 10rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  position: relative;
+}
+
+/* 恐龙 emoji 主视觉 */
+.card-dino-emoji { font-size: 72rpx; opacity: 0.85; }
+
+/* 时代标签 */
+.card-era-label {
+  font-size: 17rpx;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: 'Orbitron', 'Impact', monospace;
+  text-transform: uppercase;
+}
+
+/* ── 8种卡片渐变色（森林·深海·岩层·极光…） ── */
+.cb0 { background: linear-gradient(145deg, #2d8a5e, #154a30); }  /* 深林绿 */
+.cb1 { background: linear-gradient(145deg, #1e6a7a, #0e3a4a); }  /* 深海蓝 */
+.cb2 { background: linear-gradient(145deg, #7a5230, #3a2810); }  /* 化石棕 */
+.cb3 { background: linear-gradient(145deg, #3a5a2a, #1a2e10); }  /* 苔藓绿 */
+.cb4 { background: linear-gradient(145deg, #4a3a7a, #201830); }  /* 深紫 */
+.cb5 { background: linear-gradient(145deg, #7a4a20, #3a2010); }  /* 琥珀橙 */
+.cb6 { background: linear-gradient(145deg, #1a5a6a, #0a2a38); }  /* 苍青 */
+.cb7 { background: linear-gradient(145deg, #2a6a4a, #103820); }  /* 翡翠 */
+
+/* ── 文字 ── */
+.feed-tag {
+  display: inline-block;
+  color: #d7ff8a;
+  background: rgba(200, 240, 96, 0.18);
+  border-radius: 999rpx;
+  padding: 3rpx 14rpx;
+  font-size: 18rpx;
+  margin-bottom: 6rpx;
+}
+
+.feed-title {
+  display: block;
+  color: #f6fff8;
+  font-size: 26rpx;
+  font-weight: 500;
+  line-height: 1.35;
+  margin-bottom: 6rpx;
+}
+
+.feed-body {
+  display: block;
+  color: #c8dfce;
+  font-size: 20rpx;
+  line-height: 1.55;
+  margin-bottom: 10rpx;
+  /* 最多2行 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 62rpx;
+}
+
+.feed-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.feed-author { color: rgba(200, 235, 210, 0.70); font-size: 19rpx; }
+.feed-likes  { color: rgba(220, 255, 210, 0.60); font-size: 18rpx; }

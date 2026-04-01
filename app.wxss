@@ -1,0 +1,170 @@
+/* app.wxss — DinoSync 全局设计系统（Glassmorphism） */
+page {
+  --bg: #1d4f46;
+  --surface: #245f54;
+  --card: #2a6d60;
+  --border: rgba(255, 255, 255, 0.18);
+  --border-light: rgba(255, 255, 255, 0.26);
+  --text-primary: #eef5ef;
+  --text-secondary: #a5b9aa;
+  --text-muted: #6f8d79;
+  --accent: #c8f060;
+  --accent-warm: #f0a840;
+  --accent-cool: #60d4f0;
+  --accent-purple: #a880f0;
+  --glass-bg: rgba(255, 255, 255, 0.14);
+  --glass-border: rgba(255, 255, 255, 0.24);
+  --glass-strong: rgba(255, 255, 255, 0.2);
+
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 75% 58% at 15% -10%, rgba(172, 230, 173, 0.24), transparent 65%),
+    radial-gradient(ellipse 70% 55% at 90% 0%, rgba(88, 197, 178, 0.24), transparent 60%),
+    linear-gradient(180deg, #25695f 0%, #1d4f46 58%, #173f38 100%);
+  color: var(--text-primary);
+  font-family: 'SF Pro Rounded', 'Arial Rounded MT Bold', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', -apple-system, sans-serif;
+  font-size: 28rpx;
+  line-height: 1.65;
+  font-weight: 300;
+}
+
+/* ── 游戏感/未来感英文字体（Orbitron） ── */
+.game-font {
+  font-family: 'Orbitron', 'Impact', 'Arial Black', sans-serif;
+  letter-spacing: 0.04em;
+}
+
+/* Foundation */
+.page-wrap {
+  min-height: 100vh;
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.title {
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.body {
+  font-weight: 300;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.mono {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+}
+
+/* Glass cards */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border: 1rpx solid var(--glass-border);
+  border-radius: 24rpx;
+}
+
+.jungle-glow {
+  position: relative;
+}
+
+.jungle-glow::before {
+  content: '';
+  position: absolute;
+  inset: -20rpx;
+  border-radius: inherit;
+  background: radial-gradient(circle at 20% 0%, rgba(200, 240, 96, 0.18), transparent 60%);
+  filter: blur(22rpx);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-card-strong {
+  background: var(--glass-strong);
+  backdrop-filter: blur(24rpx);
+  -webkit-backdrop-filter: blur(24rpx);
+  border: 1rpx solid var(--glass-border);
+  border-radius: 24rpx;
+}
+
+/* Reusable components */
+.card {
+  background: var(--card);
+  border: 1rpx solid var(--border);
+  border-radius: 24rpx;
+  padding: 32rpx;
+}
+
+.chip {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 999rpx;
+  border: 1rpx solid var(--border-light);
+  color: var(--text-secondary);
+  font-size: 20rpx;
+}
+
+.chip-lime {
+  color: var(--accent);
+  border-color: rgba(200, 240, 96, 0.36);
+  background: rgba(200, 240, 96, 0.08);
+}
+
+.chip-amber {
+  color: var(--accent-warm);
+  border-color: rgba(240, 168, 64, 0.36);
+  background: rgba(240, 168, 64, 0.08);
+}
+
+.chip-cyan {
+  color: var(--accent-cool);
+  border-color: rgba(96, 212, 240, 0.36);
+  background: rgba(96, 212, 240, 0.08);
+}
+
+.btn-primary {
+  width: 100%;
+  border: none;
+  border-radius: 999rpx;
+  background: linear-gradient(90deg, rgba(98, 225, 197, 0.92), rgba(200, 240, 96, 0.9));
+  color: var(--bg);
+  font-size: 30rpx;
+  font-weight: 500;
+  padding: 24rpx 0;
+  text-align: center;
+}
+
+.btn-primary-glow {
+  box-shadow: 0 0 40rpx rgba(200, 240, 96, 0.25);
+}
+
+.btn-secondary {
+  width: 100%;
+  border: none;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  color: var(--text-secondary);
+  font-size: 28rpx;
+  font-weight: 300;
+  padding: 22rpx 0;
+  text-align: center;
+}
+
+.divider {
+  height: 1rpx;
+  background: var(--border);
+  margin: 24rpx 0;
+}
+
+.section-label {
+  font-size: 20rpx;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 24rpx;
+}

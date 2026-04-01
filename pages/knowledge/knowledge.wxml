@@ -1,0 +1,37 @@
+<view class="knowledge-page">
+  <view class="header">
+    <text class="title">古生物知识流</text>
+    <text class="sub mono">DAILY FOSSIL BRIEFING</text>
+  </view>
+
+  <view class="article-list">
+    <view
+      wx:for="{{ articleCards }}"
+      wx:key="id"
+      class="article-card {{ item.canRead ? '' : 'locked' }}"
+      data-id="{{ item.id }}"
+      bind:tap="onArticleTap"
+    >
+      <view class="article-top">
+        <text class="tag mono">{{ item.tag }}</text>
+        <text class="mins mono">{{ item.readMins }} min</text>
+      </view>
+      <text class="article-title">{{ item.title }}</text>
+      <text class="article-meta">{{ item.canRead ? '已解锁可阅读' : item.lockReason }}</text>
+    </view>
+  </view>
+
+  <view class="hint">
+    <text>提示：每天会有 1 篇“每日一化石”免费开放。</text>
+  </view>
+
+  <view class="detail-mask {{ showDetail ? 'show' : '' }}" bind:tap="closeDetail"></view>
+  <view class="detail-panel {{ showDetail ? 'show' : '' }}">
+    <view wx:if="{{ selectedArticle }}">
+      <view class="drag"></view>
+      <text class="detail-tag mono">{{ selectedArticle.tag }}</text>
+      <text class="detail-title">{{ selectedArticle.title }}</text>
+      <text class="detail-body">{{ selectedArticle.body }}</text>
+    </view>
+  </view>
+</view>

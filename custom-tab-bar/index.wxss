@@ -1,0 +1,77 @@
+/* custom-tab-bar/index.wxss */
+
+/* 外层：全宽透明容器，处理安全区，居中子内容 */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding-top: 10rpx;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 14rpx);
+  display: flex;
+  justify-content: center;
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* 内层：可见胶囊 */
+.tab-inner {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  width: 640rpx;
+  background: rgba(6, 24, 18, 0.80);
+  backdrop-filter: blur(32rpx);
+  -webkit-backdrop-filter: blur(32rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.16);
+  border-radius: 999rpx;
+  box-shadow: 0 6rpx 32rpx rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+/* 滑块：背景高亮 pill，width + left 由 JS 设置 */
+.tab-slider {
+  position: absolute;
+  top: 6rpx;
+  bottom: 6rpx;
+  border-radius: 999rpx;
+  background: linear-gradient(90deg, rgba(98, 225, 197, 0.48), rgba(200, 240, 96, 0.44));
+  transition: left 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  pointer-events: none;
+}
+
+/* 每个 tab 项 */
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 11rpx 0;
+  gap: 3rpx;
+  z-index: 2;
+}
+
+.tab-icon {
+  width: 34rpx;
+  height: 34rpx;
+  opacity: 0.48;
+  transition: opacity 0.2s;
+}
+
+.tab-text {
+  font-size: 18rpx;
+  color: rgba(255, 255, 255, 0.50);
+  letter-spacing: 0.03em;
+  transition: color 0.2s, opacity 0.2s;
+}
+
+/* 激活态 */
+.tab-item.active .tab-icon {
+  opacity: 1;
+}
+
+.tab-item.active .tab-text {
+  color: rgba(20, 50, 32, 0.92);
+  font-weight: 600;
+}

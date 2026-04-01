@@ -1,0 +1,157 @@
+<!-- pages/profile/profile.wxml — 个人中心 -->
+<view class="profile-page">
+
+  <!-- ── 顶部用户信息 ── -->
+  <view class="user-header">
+    <view class="user-avatar">
+      <text class="avatar-emoji">{{ user.avatarEmoji }}</text>
+    </view>
+    <view class="user-info">
+      <view class="user-name-row">
+        <text class="user-name">{{ user.nickName }}</text>
+        <view wx:if="{{ isMember }}" class="member-badge">
+          <text>🔬 研究员</text>
+        </view>
+      </view>
+      <view class="streak-row">
+        <text class="streak-emoji">🔥</text>
+        <text class="streak-text">连续探索 <text class="streak-num">{{ streak }}</text> 天</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── 数据统计 ── -->
+  <view class="stats-grid">
+    <view class="stat-card">
+      <text class="stat-num mono">{{ syncCount }}</text>
+      <text class="stat-label">Sync 次数</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num mono" style="color: #c8f060;">{{ unlockedCount }}</text>
+      <text class="stat-label">已解锁标本</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num mono" style="color: #a880f0;">{{ unlockedAchievements }}</text>
+      <text class="stat-label">成就徽章</text>
+    </view>
+    <view class="stat-card">
+      <text class="stat-num mono" style="color: #f0a840;">{{ streak }}</text>
+      <text class="stat-label">连签天数</text>
+    </view>
+  </view>
+
+  <view class="insight-row">
+    <view class="insight-chip">
+      <text>📤 已分享 {{ shareCount }} 次</text>
+    </view>
+    <view class="insight-chip">
+      <text>🏁 超越 {{ rankPercent }}% 探索者</text>
+    </view>
+  </view>
+
+  <!-- ── 会员卡 ── -->
+  <view class="member-section">
+    <view class="member-card {{ isMember ? 'is-member' : '' }}" bind:tap="onMemberTap">
+      <view class="member-card-bg"></view>
+      <view class="member-card-inner">
+        <view class="mc-left">
+          <text class="mc-icon">🔬</text>
+          <view>
+            <text class="mc-title">古生物研究员</text>
+            <text class="mc-sub">{{ isMember ? '会员有效中 · 感谢支持' : '解锁专属坐标 + 全量知识' }}</text>
+          </view>
+        </view>
+        <view class="mc-right">
+          <view wx:if="{{ !isMember }}" class="mc-price-wrap">
+            <text class="mc-price">¥18</text>
+            <text class="mc-price-unit">/月</text>
+          </view>
+          <view wx:else class="mc-active-badge">
+            <text>已开通</text>
+          </view>
+          <text class="mc-arrow">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── 成就墙 ── -->
+  <view class="achievement-section">
+    <view class="section-header">
+      <text class="section-title">成就徽章</text>
+      <text class="section-count mono">{{ unlockedAchievements }}/{{ achievements.length }}</text>
+    </view>
+
+    <view class="achievement-grid">
+      <view
+        wx:for="{{ achievements }}"
+        wx:key="id"
+        class="ach-card {{ item.unlocked ? 'unlocked' : 'locked' }}"
+      >
+        <view class="ach-icon-wrap {{ item.unlocked ? 'ach-glow' : '' }}">
+          <text class="ach-icon">{{ item.emoji }}</text>
+        </view>
+        <text class="ach-name">{{ item.name }}</text>
+        <text class="ach-desc">{{ item.desc }}</text>
+        <view wx:if="{{ item.unlocked }}" class="ach-check">✓</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── 排行预览 ── -->
+  <view class="rank-section">
+    <view class="section-header">
+      <text class="section-title">本周探索榜</text>
+    </view>
+    <view class="rank-card">
+      <view wx:for="{{ leaderboardPreview }}" wx:key="id" class="rank-row">
+        <text class="rank-name">{{ index + 1 }}. {{ item.name }} · {{ item.city }}</text>
+        <text class="rank-score mono">{{ item.syncCount }}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ── 快捷探索 ── -->
+  <view class="quick-section">
+    <view class="section-header">
+      <text class="section-title">快捷操作</text>
+    </view>
+    <view class="quick-card" bind:tap="goMap">
+      <text class="quick-icon">🗺️</text>
+      <view class="quick-info">
+        <text class="quick-title">探索遗迹地图</text>
+        <text class="quick-sub">发现附近的古生物坐标点</text>
+      </view>
+      <text class="quick-arrow">›</text>
+    </view>
+    <view class="divider"></view>
+    <view class="quick-card" bind:tap="onMemberTap">
+      <text class="quick-icon">🔬</text>
+      <view class="quick-info">
+        <text class="quick-title">{{ isMember ? '管理会员' : '升级研究员' }}</text>
+        <text class="quick-sub">{{ isMember ? '查看会员权益' : '解锁更多专属内容' }}</text>
+      </view>
+      <text class="quick-arrow">›</text>
+    </view>
+    <view class="divider"></view>
+    <view class="quick-card" bind:tap="goKnowledge">
+      <text class="quick-icon">📚</text>
+      <view class="quick-info">
+        <text class="quick-title">古生物知识流</text>
+        <text class="quick-sub">今日推荐：{{ dailyArticleTitle }}</text>
+      </view>
+      <text class="quick-arrow">›</text>
+    </view>
+  </view>
+
+  <!-- 底部说明 -->
+  <view class="footer-note">
+    <text class="game-font footer-brand">DINOSYNC</text>
+    <text class="mono" style="font-size:17rpx;color:#2e3a30;">时空遗迹 · DEMO v0.1</text>
+    <text>Find the Point, Sync the Past.</text>
+  </view>
+
+  <view style="height: 40rpx;"></view>
+</view>
+
+<custom-tab-bar></custom-tab-bar>

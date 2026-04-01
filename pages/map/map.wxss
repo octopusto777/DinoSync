@@ -1,0 +1,218 @@
+/* pages/map/map.wxss */
+
+.map-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #2f7f70 0%, #1d4f46 55%, #173f38 100%);
+}
+
+/* ── 顶部导航 ── */
+.nav-bar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 78rpx 28rpx 16rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.20);
+}
+.nav-title  { font-size: 40rpx; color: #f7fff9; font-weight: 600; display: block; }
+.nav-sub    { font-size: 18rpx; color: #cef0dd; }
+.nav-stats  { display: flex; flex-direction: column; align-items: flex-end; }
+.nav-stat-num   { font-size: 34rpx; color: #d7ff8a; font-weight: 700; }
+.nav-stat-label { font-size: 18rpx; color: #cef0dd; }
+
+/* ── 地图区域 ── */
+.map-wrap {
+  margin-top: 144rpx; /* 给 fixed nav-bar 留空 */
+  height: 400rpx;
+  position: relative;
+}
+
+.explore-map {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── 筛选 ── */
+.filter-row { padding: 10rpx 16rpx 4rpx; }
+.filter-inner { display: flex; gap: 10rpx; }
+.filter-chip {
+  border: none;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999rpx;
+  color: #f5fff8;
+  font-size: 24rpx;
+  padding: 10rpx 24rpx;
+}
+.filter-chip.active {
+  background: rgba(200, 240, 96, 0.35);
+  color: #0f2f1f;
+  font-weight: 500;
+}
+
+/* ── 列表 ── */
+.location-list { padding-top: 4rpx; }
+.list-header {
+  padding: 6rpx 20rpx 10rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.list-title { color: #f6fff9; font-size: 28rpx; font-weight: 500; }
+.list-count { color: #cce8d4; font-size: 18rpx; }
+
+.location-card {
+  margin: 0 16rpx 10rpx;
+  padding: 18rpx;
+  border-radius: 22rpx;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(20rpx);
+  -webkit-backdrop-filter: blur(20rpx);
+  border: 1rpx solid rgba(255, 255, 255, 0.22);
+  display: flex;
+  gap: 14rpx;
+  align-items: flex-start;
+}
+.loc-type-badge {
+  width: 52rpx; height: 52rpx;
+  border-radius: 13rpx;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.loc-type-text { font-size: 22rpx; color: #f8fff8; font-weight: 600; }
+.type-museum { background: rgba(200, 240, 96, 0.28); }
+.type-wild   { background: rgba(240, 168, 64, 0.32); }
+.type-urban  { background: rgba(96, 212, 240, 0.28); }
+.loc-info { flex: 1; }
+.loc-title-row { display: flex; align-items: center; gap: 8rpx; }
+.loc-name { font-size: 28rpx; color: #f3fffa; font-weight: 600; }
+.loc-city { font-size: 20rpx; color: #cde8d8; display: block; margin: 3rpx 0; }
+.loc-desc { font-size: 20rpx; color: #daf0e6; line-height: 1.5; }
+.loc-meta { display: flex; flex-direction: column; align-items: flex-end; min-width: 80rpx; }
+.loc-count { color: #d7ff8a; font-size: 32rpx; font-weight: 700; }
+.loc-count-label { font-size: 17rpx; color: #cde8d8; }
+
+/* ── 遮罩 ── */
+.sheet-mask {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  transition: background .25s;
+  z-index: 400;
+}
+.sheet-mask.visible {
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+
+/* ── 底部弹窗 ── */
+.bottom-sheet {
+  position: fixed;
+  left: 0; right: 0;
+  bottom: -110%;
+  z-index: 401;
+  background: rgba(20, 55, 42, 0.88);
+  backdrop-filter: blur(36rpx);
+  -webkit-backdrop-filter: blur(36rpx);
+  border-top: 1rpx solid rgba(255, 255, 255, 0.24);
+  border-radius: 36rpx 36rpx 0 0;
+  padding: 12rpx 28rpx 0;
+  padding-bottom: calc(env(safe-area-inset-bottom) + 100rpx);
+  transition: bottom .28s cubic-bezier(0.32, 0, 0.15, 1);
+}
+.bottom-sheet.visible { bottom: 0; }
+
+.drag-bar {
+  width: 72rpx; height: 7rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.45);
+  margin: 4rpx auto 20rpx;
+}
+
+.sheet-type-row { display: flex; align-items: center; gap: 12rpx; margin-bottom: 10rpx; }
+.hot-label { font-size: 22rpx; color: #f0c060; }
+.sheet-title { display: block; font-size: 34rpx; font-weight: 600; color: #f0fff8; }
+.sheet-sub   { display: block; font-size: 22rpx; color: #cde8d8; margin-top: 4rpx; }
+.sheet-desc  { display: block; font-size: 24rpx; color: #e0f5ea; margin-top: 10rpx; line-height: 1.65; }
+
+.sheet-stats-row {
+  margin-top: 16rpx;
+  display: flex; align-items: baseline; gap: 10rpx;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 14rpx; padding: 14rpx 18rpx;
+}
+.sheet-stat-num   { font-size: 36rpx; font-weight: 700; color: #d7ff8a; }
+.sheet-stat-label { font-size: 20rpx; color: #cde8d8; flex: 1; }
+
+.btn-action {
+  display: block;
+  margin-top: 20rpx; width: 100%;
+  border: none; border-radius: 999rpx;
+  background: linear-gradient(90deg, #62e1c5, #c8f060);
+  color: #0e2c1e;
+  font-size: 30rpx; font-weight: 600;
+  padding: 24rpx 0; text-align: center;
+  box-shadow: 0 4rpx 24rpx rgba(200, 240, 96, 0.28);
+}
+
+/* ── BOT 浮窗按钮（真实图片） ── */
+.bot-fab {
+  position: fixed;
+  right: 28rpx;
+  bottom: calc(env(safe-area-inset-bottom) + 120rpx);
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 200;
+  box-shadow: 0 6rpx 28rpx rgba(60, 160, 100, 0.5);
+  border: 2rpx solid rgba(255, 255, 255, 0.35);
+  background: #e8f5ec;
+}
+.bot-fab-img {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── BOT 弹窗 ── */
+.bot-sheet-head { display: flex; gap: 16rpx; align-items: center; margin-bottom: 18rpx; }
+
+.bot-avatar-circle {
+  width: 80rpx; height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e8f5ec;
+  flex-shrink: 0;
+  border: 1.5rpx solid rgba(255, 255, 255, 0.25);
+}
+.bot-avatar-img { width: 100%; height: 100%; }
+
+.bot-answer-box {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 18rpx;
+  padding: 18rpx;
+  margin-bottom: 16rpx;
+  min-height: 80rpx;
+}
+.bot-answer-text { font-size: 26rpx; color: #eafff4; line-height: 1.7; }
+
+.bot-input-row { display: flex; gap: 12rpx; align-items: center; }
+.bot-input {
+  flex: 1;
+  border-radius: 999rpx;
+  padding: 16rpx 22rpx;
+  background: rgba(255, 255, 255, 0.18);
+  color: #f8fffa;
+  font-size: 26rpx;
+}
+.bot-send {
+  width: 70rpx; height: 70rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #62e1c5, #c8f060);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.bot-send text { font-size: 30rpx; color: #0e2c1e; font-weight: 700; }

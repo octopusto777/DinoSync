@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 46" width="36" height="46">
+  <!-- shadow -->
+  <ellipse cx="18" cy="44" rx="5.5" ry="2" fill="rgba(0,0,0,0.16)"/>
+  <!-- pin body -->
+  <path d="M18,1 C9.2,1 2,8.2 2,17 C2,28 18,45 18,45 C18,45 34,28 34,17 C34,8.2 26.8,1 18,1Z" fill="#c8f060"/>
+  <!-- pin edge highlight -->
+  <path d="M18,1 C9.2,1 2,8.2 2,17 C2,28 18,45 18,45 C18,45 34,28 34,17 C34,8.2 26.8,1 18,1Z" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/>
+  <!-- inner dark circle -->
+  <circle cx="18" cy="15.5" r="9" fill="rgba(8,30,18,0.62)"/>
+  <!-- bone: horizontal bar -->
+  <rect x="9.5" y="14" width="17" height="3" rx="1.5" fill="white"/>
+  <!-- bone: left top ball -->
+  <circle cx="10.8" cy="12.5" r="2.8" fill="white"/>
+  <!-- bone: left bottom ball -->
+  <circle cx="10.8" cy="18.5" r="2.8" fill="white"/>
+  <!-- bone: right top ball -->
+  <circle cx="25.2" cy="12.5" r="2.8" fill="white"/>
+  <!-- bone: right bottom ball -->
+  <circle cx="25.2" cy="18.5" r="2.8" fill="white"/>
+</svg>

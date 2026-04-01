@@ -1,0 +1,52 @@
+<view class="home-page">
+  <!-- 顶部导航 -->
+  <view class="home-nav">
+    <text class="home-title game-font">DINOSYNC</text>
+    <view class="home-chip"><text>爱好者交流</text></view>
+  </view>
+
+  <!-- 瀑布流（横竖错落） -->
+  <scroll-view class="feed-scroll" scroll-y>
+    <view class="waterfall">
+
+      <!-- 左列 -->
+      <view class="feed-col">
+        <view wx:for="{{ leftFeed }}" wx:key="id" class="feed-card glass-card">
+          <!-- 渐变色占位图（imgH 决定竖/横，每张配色不同） -->
+          <view class="media-window {{ item.colorClass }}" style="height:{{ item.imgH }}rpx;">
+            <text class="card-dino-emoji">{{ item.emoji }}</text>
+            <text class="card-era-label">{{ item.era }}</text>
+          </view>
+          <text class="feed-tag">{{ item.tag }}</text>
+          <text class="feed-title">{{ item.title }}</text>
+          <text class="feed-body">{{ item.body }}</text>
+          <view class="feed-meta">
+            <text class="feed-author">{{ item.author }}</text>
+            <text class="feed-likes mono">❤ {{ item.likes }}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 右列（顶部偏移制造错落） -->
+      <view class="feed-col feed-col-right">
+        <view wx:for="{{ rightFeed }}" wx:key="id" class="feed-card glass-card">
+          <view class="media-window {{ item.colorClass }}" style="height:{{ item.imgH }}rpx;">
+            <text class="card-dino-emoji">{{ item.emoji }}</text>
+            <text class="card-era-label">{{ item.era }}</text>
+          </view>
+          <text class="feed-tag">{{ item.tag }}</text>
+          <text class="feed-title">{{ item.title }}</text>
+          <text class="feed-body">{{ item.body }}</text>
+          <view class="feed-meta">
+            <text class="feed-author">{{ item.author }}</text>
+            <text class="feed-likes mono">❤ {{ item.likes }}</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+    <view style="height:150rpx;"></view>
+  </scroll-view>
+
+  <custom-tab-bar></custom-tab-bar>
+</view>

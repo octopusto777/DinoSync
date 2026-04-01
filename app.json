@@ -1,0 +1,34 @@
+{
+  "pages": [
+    "pages/splash/splash",
+    "pages/home/home",
+    "pages/map/map",
+    "pages/sync/sync",
+    "pages/collection/collection",
+    "pages/knowledge/knowledge",
+    "pages/profile/profile"
+  ],
+  "tabBar": {
+    "custom": true,
+    "color": "#6f8d79",
+    "selectedColor": "#c8f060",
+    "backgroundColor": "#11241b",
+    "borderStyle": "black",
+    "list": [
+      { "pagePath": "pages/home/home", "text": "HOME" },
+      { "pagePath": "pages/map/map", "text": "探索" },
+      { "pagePath": "pages/collection/collection", "text": "图鉴" },
+      { "pagePath": "pages/profile/profile", "text": "我的" }
+    ]
+  },
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#11241b",
+    "navigationBarTitleText": "DinoSync",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#11241b"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

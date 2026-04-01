@@ -1,0 +1,44 @@
+<!-- pages/splash/splash.wxml — 启动页 -->
+<view class="splash-wrap">
+  <!-- 背景光晕 -->
+  <view class="glow glow-1"></view>
+  <view class="glow glow-2"></view>
+
+  <!-- 主内容 -->
+  <view class="content {{ showContent ? 'visible' : '' }}">
+    <!-- Logo 区域 -->
+    <view class="logo-wrap">
+      <view class="logo-icon">
+        <text class="logo-dino">🦕</text>
+        <view class="logo-ring ring-1"></view>
+        <view class="logo-ring ring-2"></view>
+        <view class="logo-ring ring-3"></view>
+      </view>
+    </view>
+
+    <!-- 品牌名 -->
+    <view class="brand-wrap">
+      <text class="brand-name game-font">DINOSYNC</text>
+      <text class="brand-cn">时空遗迹</text>
+    </view>
+
+    <!-- Slogan -->
+    <view class="slogan-wrap">
+      <text class="slogan-en">Find the Point, Sync the Past.</text>
+      <text class="slogan-cn">步入坐标，同步纪元</text>
+    </view>
+
+    <!-- 加载指示 -->
+    <view class="loading-wrap">
+      <view class="loading-bar">
+        <view class="loading-fill"></view>
+      </view>
+      <text class="loading-text mono">正在同步时空数据...</text>
+    </view>
+  </view>
+
+  <!-- 底部版本号 -->
+  <view class="version {{ showContent ? 'visible' : '' }}">
+    <text class="mono">DEMO v0.1 · MVP 实验版</text>
+  </view>
+</view>
